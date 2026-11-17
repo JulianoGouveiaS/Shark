@@ -44,6 +44,13 @@ describe("mascaraWhatsapp", () => {
     assert.equal(mascaraWhatsapp("199888877771234"), "(19) 98888-7777");
   });
 
+  it("mantém o DDD 55 quando sobra um dígito na máscara", () => {
+    assert.equal(mascaraWhatsapp("(55) 99999-99991"), "(55) 99999-9999");
+    assert.equal(whatsappComDdd("(55) 99999-99991"), "55999999999");
+    assert.equal(mascaraWhatsapp("+55 (55) 99999-9999"), "(55) 99999-9999");
+    assert.equal(whatsappComDdd("+55 55 99999-9999"), "55999999999");
+  });
+
   it("devolve a posição depois dos mesmos dígitos", () => {
     assert.equal(posicaoMascara("(19) 98888-7777", 0), 0);
     assert.equal(posicaoMascara("(19) 98888-7777", 2), 3);

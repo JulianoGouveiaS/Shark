@@ -81,10 +81,13 @@ function texto(valor: unknown): string {
 }
 
 function digitosNacionais(valor: unknown): string {
-  const digitos = texto(valor).replace(/\D/g, "");
-  if (digitos.startsWith("55") && (digitos.length === 12 || digitos.length === 13)) {
-    return digitos.slice(2);
+  const bruto = texto(valor);
+  let digitos = bruto.replace(/\D/g, "");
+  const edicaoNacional = bruto.startsWith("(");
+  if (!edicaoNacional && digitos.startsWith("55") && (digitos.length === 12 || digitos.length === 13)) {
+    digitos = digitos.slice(2);
   }
+  if (edicaoNacional) digitos = digitos.slice(0, 11);
   return digitos;
 }
 
