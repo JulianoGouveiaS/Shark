@@ -25,7 +25,7 @@ Boas práticas neste repositório:
 - `prefers-reduced-motion` mostra o estado final, sem desenhar traço e sem contar número.
 - Cor, marca e frase travada da landing permanecem as do plano.
 - Pacote, serviço ou fonte nova não entra sem decisão do tech lead.
-- Mudança entra por pull request para a `main`. Não usar force push, nem `--force`, nem `--force-with-lease`.
+- Cada feature sai de uma branch própria, aberta a partir da `develop`, e entra por pull request para a `develop`. Não usar force push, nem `--force`, nem `--force-with-lease`.
 
 ## SOLID
 
@@ -50,6 +50,14 @@ Quem chama depende só do que usa. Componente recebe o que renderiza, não a lin
 ### Dependência invertida
 
 A regra de negócio depende de fato e de contrato, não de tela nem de conexão com o banco. A rota chama a validação. A validação não importa a rota nem o Supabase. O portão da etapa olha o fato (visita aconteceu, proposta aceita), não um componente. Trocar o lugar da gravação não reescreve a regra.
+
+## Entrega
+
+- Cada item do entregável vira subtarefa no pull request.
+- Toda feature atualiza o README e o CHANGELOG no mesmo pull request. Sem outro documento.
+- Erro de API sai em log tokenizado: um token opaco por falha e um evento estável. O log não leva nome, telefone, garagem, cidade nem outro dado de pessoa.
+- Comportamento novo entra com teste unitário.
+- A interface é componentizada. Máscara de campo e toast nascem no componente, sem pacote novo. Movimento continua em Motion, que já está no app.
 
 ## O que fica de fora do produto
 

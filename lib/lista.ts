@@ -80,16 +80,45 @@ function texto(valor: unknown): string {
   return valor.replace(/[\u0000-\u001F\u007F]/g, "").trim().replace(/\s+/g, " ");
 }
 
+function digitosNacionais(valor: unknown): string {
+  const bruto = texto(valor);
+  let digitos = bruto.replace(/\D/g, "");
+  const edicaoNacional = bruto.startsWith("(");
+  if (!edicaoNacional && digitos.startsWith("55") && (digitos.length === 12 || digitos.length === 13)) {
+    digitos = digitos.slice(2);
+  }
+  if (edicaoNacional) digitos = digitos.slice(0, 11);
+  return digitos;
+}
+
 export function whatsappComDdd(valor: unknown): string | null {
-  const digitos = texto(valor).replace(/\D/g, "");
-  const nacional =
-    digitos.startsWith("55") && (digitos.length === 12 || digitos.length === 13)
-      ? digitos.slice(2)
-      : digitos;
+  const nacional = digitosNacionais(valor);
   if (nacional.length !== 10 && nacional.length !== 11) return null;
   const ddd = Number(nacional.slice(0, 2));
   if (!Number.isInteger(ddd) || ddd < 11 || ddd > 99) return null;
   return nacional;
+}
+
+export function mascaraWhatsapp(valor: string): string {
+  const digitos = digitosNacionais(valor).slice(0, 11);
+  if (digitos.length === 0) return "";
+  const ddd = digitos.slice(0, 2);
+  const resto = digitos.slice(2);
+  if (resto.length === 0) return `(${ddd}`;
+  if (digitos.length > 10) return `(${ddd}) ${resto.slice(0, 5)}-${resto.slice(5)}`;
+  if (resto.length <= 4) return `(${ddd}) ${resto}`;
+  return `(${ddd}) ${resto.slice(0, 4)}-${resto.slice(4)}`;
+}
+
+export function posicaoMascara(mascarado: string, digitosAntes: number): number {
+  if (digitosAntes <= 0) return 0;
+  let vistos = 0;
+  for (let i = 0; i < mascarado.length; i += 1) {
+    const codigo = mascarado.charCodeAt(i);
+    if (codigo >= 48 && codigo <= 57) vistos += 1;
+    if (vistos >= digitosAntes) return i + 1;
+  }
+  return mascarado.length;
 }
 
 export function validarLista(body: unknown): { ok: true; row: ListaRow } | { ok: false; error: ListaErro } {
