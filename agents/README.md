@@ -6,7 +6,7 @@ Leia primeiro [regras.md](regras.md). Depois, só o arquivo do seu papel. O que 
 
 | Papel | Arquivo | O que acrescenta |
 | --- | --- | --- |
-| Regras de todos | [regras.md](regras.md) | Código limpo, performático, nível sênior, boas práticas e SOLID |
+| Regras de todos | [regras.md](regras.md) | Código limpo, performático, nível sênior, boas práticas, SOLID e entrega |
 | Tech lead | [tech-lead.md](tech-lead.md) | Padrão, revisão e o que não entra. Não implementa feature sozinho |
 | Orquestrador | [orquestrador.md](orquestrador.md) | Reparte o trabalho, impede dois papéis no mesmo arquivo e devolve conflito ao tech lead |
 | Dev backend | [dev-backend.md](dev-backend.md) | API, Supabase, dados e validação no servidor |
